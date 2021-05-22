@@ -31,7 +31,7 @@
 		</div>
     <div class="cont_fr">
 		<div class="box">
-		  <el-button type="primary" size="mini">批量授权</el-button>
+		  <el-button type="primary" size="mini">批量授权1</el-button>
 		  <el-input
 		    style="width: 70%"
 		    v-model="search"
