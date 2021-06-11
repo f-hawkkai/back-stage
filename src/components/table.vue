@@ -31,7 +31,7 @@
 		</div>
     <div class="cont_fr">
 		<div class="box">
-		  <el-button type="primary" size="mini">批量授权1</el-button>
+		  <el-button type="primary" size="mini" @click="shouquan">批量授权</el-button>
 		  <el-input
 		    style="width: 70%"
 		    v-model="search"
@@ -40,7 +40,7 @@
 		  />
 		</div>
 		
-		<el-table :data="tableData" border ref="multipleTable" style="width: 100%">
+		<el-table :data="tableData" border ref="multipleTable" style="width: 100%" stripe>
 		  <el-table-column type="selection" width="55"> </el-table-column>
 		  <el-table-column prop="order" label="IP" sortable>
 		  </el-table-column>
@@ -59,7 +59,7 @@
 		      <el-button
 		        size="mini"
 		        type="danger"
-		        @click="handleDelete(scope.$index, scope.row)">授权</el-button>
+		        @click="handleDelete(scope.$index, scope.row)">删除</el-button>
 		    </template>
 		  </el-table-column>
 		</el-table>
@@ -100,111 +100,29 @@ export default {
           modTime: "修改时间",
         },
       ],
-      tableData: [
-        {
-          order: "ORD20201100011",
-          source: "ITA",
-          iaas: "开发",
-          tenantName: "小红",
-          state: "实施中",
-          estTime: "2020-11-10",
-          modTime: "2020-11-10",
-        },
-        {
-          order: "ORD20201100022",
-          source: "ITA",
-          iaas: "开发",
-          tenantName: "小黄",
-          state: "实施中",
-          estTime: "2020-11-10",
-          modTime: "2020-11-10",
-        },
-        {
-          order: "ORD20201100033",
-          source: "ITA",
-          iaas: "测试",
-          tenantName: "小黑",
-          state: "实施中",
-          estTime: "2020-11-10",
-          modTime: "2020-11-10",
-        },
-        {
-          order: "ORD20201100044",
-          source: "ITA",
-          iaas: "开发",
-          tenantName: "小七",
-          state: "实施中",
-          estTime: "2020-11-10",
-          modTime: "2020-11-10",
-        },
-        {
-          order: "ORD20201100011",
-          source: "ITA",
-          iaas: "开发",
-          tenantName: "小红",
-          state: "实施中",
-          estTime: "2020-11-10",
-          modTime: "2020-11-10",
-        },
-        {
-          order: "ORD20201100022",
-          source: "ITA",
-          iaas: "开发",
-          tenantName: "小黄",
-          state: "实施中",
-          estTime: "2020-11-10",
-          modTime: "2020-11-10",
-        },
-        {
-          order: "ORD20201100033",
-          source: "ITA",
-          iaas: "测试",
-          tenantName: "小黑",
-          state: "实施中",
-          estTime: "2020-11-10",
-          modTime: "2020-11-10",
-        },
-		{
-		  order: "ORD20201100033",
-		  source: "ITA",
-		  iaas: "测试",
-		  tenantName: "小黑",
-		  state: "实施中",
-		  estTime: "2020-11-10",
-		  modTime: "2020-11-10",
-		},
-      ],
+      tableData: [],
     };
   },
-  // created() {
-  // 	setTimeout(() => {
-  // 		let heig = $(document.body).height()
-		// console.log(heig)
-  // 		$(".cont_fl").css({
-  // 			height: heig + "px"
-  // 		});
-  // 	},10)
-  // },
+  mounted(){
+	  this.tableaxios()
+  },
   methods: {
-    handleLook(index, row) {
-      $(".dialog-box div").empty();
-      console.log($(".dialog-box div").text());
-      this.dialogTableVisible = true;
-      console.log(index);
-      console.log(row);
-      this.rows.push(row);
-    },
-    formatter(row, column) {
-      return row.address;
-    },
-    handleEdit(index, row) {
-      console.log(index, row);
-    },
+	  tableaxios(){
+		  this.$axios.get("../static/json/data.json",{
+			  params:{}
+		  }).then((res)=>{
+			  this.tableData = res.data.list
+		  })
+	  },
+    // handleLook(index, row) {
+    //   $(".dialog-box div").empty();
+    //   console.log($(".dialog-box div").text());
+    //   this.dialogTableVisible = true;
+    //   console.log(index);
+    //   console.log(row);
+    //   this.rows.push(row);
+    // },
     handleDelete(index, row) {
-      console.log(index,row)
-      this.$axios.get("/#/api/detail/?productID=122").then(function(res){
-        console.log(res)
-      })
        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -221,6 +139,9 @@ export default {
           });          
         });
     },
+	shouquan(){
+		console.log(123)
+	},
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
